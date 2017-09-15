@@ -1,0 +1,34 @@
+---
+title: "Warmup01"
+author: "Yanxin Zhu"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### How to make a breakfast
+* Milk
+* Bread
+* Cup Noodles
+* Cereal
+* Fruit
+
+## Kitchen Tools
+* Toaster
+* Tea Kettle
+* Knife
+
+# Steps
+1. boil water in tea kettle 
+2. pour out milk and mix with cereal
+3. put bread into toaster and wait for one minute
+4. use a knife to cut fruit
+5. pour boiled water into cup noodle and wait for three minutes
+6. prepare a sheet of paper and put all the food on it
+7. the cup noodle is ready to eat 
+8. begin eating 
+
+
+
