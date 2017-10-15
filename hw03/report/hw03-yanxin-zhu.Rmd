@@ -1,0 +1,58 @@
+---
+title: "hw03-yanxin-zhu.Rmd"
+output: github_document
+---
+# load data file
+```{r}
+library(ggplot2)
+teams<-read.csv("C:/Users/mycpu/Desktop/about_work/about_work/work/begin/work8/hw03/data/nba2017-teams.csv")
+```
+## ranked by Total Salary
+```{r}
+ggplot(teams,aes(x=reorder(team,salary), y=salary))+geom_bar(stat='identity')+geom_hline(yintercept=mean(teams$salary),col='red',lwd=1.5) +coord_flip()
+```
+
+
+## ranked by Total Points
+```{r}
+ggplot(teams,aes(x=reorder(team,points), y=points)) +
+  geom_bar(stat='identity')+geom_hline(yintercept=mean(teams$points),col='red',lwd=1.5)+coord_flip()
+```
+## ranked by efficiency
+```{r}
+ggplot(teams,aes(x=reorder(team,efficiency), y=efficiency)) +
+  geom_bar(stat='identity')+geom_hline(yintercept=mean(teams$efficiency),col='red',lwd=1.5) +coord_flip()
+```
+
+##Principal Components Analysis (PCA)
+```{r}
+pca_data<-subset(teams,select = c( 'points3','points2','free_throws','off_rebounds'
+,'def_rebounds','assists','steals','blocks','turnovers','fouls'))
+pca_result<-prcomp(pca_data,scale. = TRUE)
+pca_summary<-summary(pca_result)
+eigenvalues<-data.frame(eigenvalue=(pca_summary$sdev)^2,prop=pca_summary$importance[2,]
+                        ,cumprop=pca_summary$importance[3,])
+eigenvalues
+```
+
+
+```{r}
+pca1<-pca_result$rotation[,1]
+pca2<-pca_result$rotation[,2]
+pca_data<-scale(pca_data)
+x_pca1<-as.matrix(pca_data)%*%as.matrix(pca1)
+y_pca2<-as.matrix(pca_data)%*%as.matrix(pca2)
+plotdata<-data.frame(x=x_pca1,y=y_pca2,label=teams$team)
+ggplot(data = plotdata, mapping = aes(x = x, y =y))+geom_text(aes(label=label),size=3)+labs(x = "PC1",y = "PC2")
+
+```
+
+```{r}
+new_index<-as.matrix(pca_data)%*%as.matrix(pca1)
+new_index<-(new_index-min(new_index))/(max(new_index)-min(new_index))*100
+plotdata<-data.frame(index=new_index,team<-teams$team)
+
+ggplot(plotdata,aes(x=reorder(team,index),y=index))+geom_bar(stat='identity')+coord_flip()
+```
+
+we can see that GSW ranks first and SAC ranks last
