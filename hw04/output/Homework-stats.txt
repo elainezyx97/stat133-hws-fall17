@@ -1,0 +1,11 @@
+minimum:5.3125 
+percent10:57.5938 
+quartile1:77.3750 
+median:88.7188 
+average:82.4863 
+quantile3:93.9062 
+percent90:97.0688 
+maximum:100.0000 
+range:94.6875 
+stdev:17.1880 
+missing:0.0000 
